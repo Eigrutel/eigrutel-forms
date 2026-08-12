@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Forms — référence interactive de formes simples pour le dessin. Eigrutel Lab.">
+<title>Forms — Eigrutel Lab</title>
+<style>
+:root{--bg:#F3F4F6;--panel:#FAFAF7;--ink:#2D2436;--muted:#75667E;--blue:#1F3A44;--line:rgba(31,58,68,.12);--shadow:0 12px 32px rgba(26,26,26,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}a{color:inherit}
+.wrap{max-width:980px;margin:0 auto;padding:24px 18px 42px}.topbar{display:flex;justify-content:flex-end;margin-bottom:8px}
+.lang-btn{border:1px solid var(--line);background:transparent;color:var(--muted);border-radius:999px;padding:6px 10px;font:inherit;font-size:.76rem;font-weight:800;cursor:pointer}
+.hero,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}.hero{padding:36px 28px;text-align:center}
+h1{margin:0;color:var(--blue);font-size:clamp(2.8rem,8vw,5.4rem);letter-spacing:-.05em;line-height:.95}.tagline{font-size:1.08rem;color:var(--muted);margin:16px auto 0;max-width:680px;line-height:1.55}
+.actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:24px}.btn{display:inline-block;text-decoration:none;padding:11px 15px;border-radius:11px;border:1px solid var(--line);background:#fff;font-weight:750}.btn.primary{background:var(--blue);color:#fff}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.card{padding:22px}h2{margin:0 0 10px;font-size:1rem;text-transform:uppercase;letter-spacing:.09em;color:var(--muted)}p{line-height:1.6;margin:0}
+.links{display:flex;flex-wrap:wrap;gap:12px}.links a{font-weight:650;text-decoration:none;border-bottom:1px solid var(--line)}footer{text-align:center;color:var(--muted);font-size:.82rem;line-height:1.6;margin-top:26px}
+[data-lang="en"]{display:none}body.en [data-lang="fr"]{display:none}body.en [data-lang="en"]{display:block}body.en .inline[data-lang="en"]{display:inline}.inline[data-lang="fr"]{display:inline}body.en .inline[data-lang="fr"]{display:none}
+@media(max-width:700px){.wrap{padding:10px 10px 28px}.hero{padding:28px 18px}.grid{grid-template-columns:1fr}.card{padding:18px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+<div class="topbar"><button class="lang-btn" id="langBtn" type="button" aria-label="Changer de langue / Switch language">FR / EN</button></div>
+<section class="hero">
+<h1>Forms</h1>
+<p class="tagline" data-lang="fr">Manipulez rapidement les formes simples qui servent de base à la construction en dessin.</p>
+<p class="tagline" data-lang="en">Quickly manipulate the simple forms used as a foundation for drawing construction.</p>
+<div class="actions">
+<a class="btn primary" href="forms.html"><span class="inline" data-lang="fr">Ouvrir Forms</span><span class="inline" data-lang="en">Open Forms</span></a>
+<a class="btn" href="https://github.com/Eigrutel/eigrutel-forms/releases/latest"><span class="inline" data-lang="fr">Version stable</span><span class="inline" data-lang="en">Stable release</span></a>
+</div>
+</section>
+<div class="grid">
+<section class="card"><h2 data-lang="fr">Formes</h2><h2 data-lang="en">Forms</h2><p data-lang="fr">Boîte, cylindre, sphère, cône et pyramide : les cinq formes peuvent être orientées librement et ajustées en dimensions.</p><p data-lang="en">Box, cylinder, sphere, cone and pyramid: all five forms can be freely oriented and adjusted in size.</p></section>
+<section class="card"><h2 data-lang="fr">Manipulation</h2><h2 data-lang="en">Manipulation</h2><p data-lang="fr">Rotation au doigt ou à la souris, axes X/Y/Z, zoom, angle de vue et pose aléatoire permettent de produire rapidement une référence.</p><p data-lang="en">Touch or mouse rotation, X/Y/Z axes, zoom, view angle and random pose make it easy to create a quick reference.</p></section>
+<section class="card"><h2 data-lang="fr">Utilisation</h2><h2 data-lang="en">Use</h2><p data-lang="fr">Aucune installation : Forms fonctionne directement dans un navigateur moderne et tient dans un fichier HTML autonome.</p><p data-lang="en">No installation is required: Forms runs directly in a modern browser and is contained in one self-contained HTML file.</p></section>
+<section class="card"><h2 data-lang="fr">Documentation</h2><h2 data-lang="en">Documentation</h2><div class="links"><a href="README.md">README</a><a href="ARCHITECTURE.md">ARCHITECTURE</a><a href="CHANGELOG.md">CHANGELOG</a><a href="NOTICE.md">NOTICE</a><a href="LICENSE.md">LICENSE</a><a href="https://github.com/Eigrutel/eigrutel-forms"><span class="inline" data-lang="fr">Code source</span><span class="inline" data-lang="en">Source code</span></a></div></section>
+</div>
+<footer><strong>Eigrutel Lab — Atelier d'outils libres pour la bande dessinée</strong><br><span data-lang="fr">Forms 1.0.0 — conçu et développé par Simon Léturgie dans le cadre d’Eigrutel BD Academy.</span><span data-lang="en">Forms 1.0.0 — designed and developed by Simon Léturgie as part of Eigrutel BD Academy.</span><br><span data-lang="fr">Code : GNU AGPL v3.0 ou ultérieure · Documentation : CC BY-SA 4.0 · Marques Eigrutel réservées.</span><span data-lang="en">Code: GNU AGPL v3.0 or later · Documentation: CC BY-SA 4.0 · Eigrutel trademarks reserved.</span></footer>
+</main>
+<script>
+const btn=document.getElementById('langBtn');let lang='fr';btn.addEventListener('click',()=>{lang=lang==='fr'?'en':'fr';document.body.classList.toggle('en',lang==='en');document.documentElement.lang=lang});
+</script>
+</body>
+</html>

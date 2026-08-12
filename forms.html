@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<!--
+Eigrutel Lab - Atelier d'outils libres pour la bande dessinée
+Programme conçu et développé par Simon Léturgie dans le cadre d'Eigrutel BD Academy.
+Nom : Forms
+Version : 1.0.0
+Date : 09-08-2026
+
+Code : GNU AGPL v3.0 ou version ultérieure.
+Documentation et modèles : CC BY-SA 4.0, sauf mention contraire.
+Marques, logos et signes distinctifs Eigrutel / Eigrutel Lab / Eigrutel BD Academy : réservés.
+-->
+
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Forms — Référence de formes pour le dessin</title>
+<style>
+:root{
+  --page-bg:#F3F4F6;
+  --text-main:#2D2436;
+  --text-muted:#75667E;
+  --bleu-atelier:#1F3A44;
+  --gris-encrage:#3C3C3C;
+  --rouge-atelier:#A63D40;
+  --blanc-casse:#FAFAF7;
+  --shadow-soft:0 10px 24px rgba(26,26,26,.08);
+  --shadow-light:0 4px 12px rgba(26,26,26,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:var(--page-bg);color:var(--text-main)}
+.container{max-width:1100px;margin:0 auto;padding:1rem clamp(1rem,3vw,2rem) 2rem}
+.volumes-topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;background:#fff;border:1px solid rgba(31,58,68,.08);border-left:none;border-radius:14px;padding:12px 14px;margin-bottom:12px;box-shadow:var(--shadow-light)}
+.volumes-title{margin:0;font-size:.82rem;font-weight:900;letter-spacing:.22em;text-transform:uppercase;color:var(--bleu-atelier)}
+.lang-switch{margin-left:auto;width:auto;padding:6px 9px;border:1px solid rgba(31,58,68,.16);border-radius:999px;background:transparent;color:var(--text-muted);font-size:.72rem;font-weight:800;letter-spacing:.05em;box-shadow:none}
+.lang-switch:hover{filter:none;transform:none;background:rgba(31,58,68,.05)}
+.object-picker{display:grid;grid-template-columns:auto minmax(180px,1fr);gap:10px;align-items:center}
+.object-picker label{font-size:.76rem;font-weight:900;color:var(--gris-encrage)}
+.object-picker select{appearance:auto;width:100%;min-width:190px;padding:10px 14px;border:2px solid rgba(31,58,68,.16);border-radius:12px;background:#fff;color:var(--bleu-atelier);font-size:.92rem;font-weight:850;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.object-picker select:focus{outline:3px solid rgba(31,58,68,.12);border-color:var(--bleu-atelier)}
+.box-generator{background:var(--blanc-casse);border:1px solid rgba(31,58,68,.06);border-radius:22px;padding:14px;box-shadow:var(--shadow-soft)}
+.box-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:12px;align-items:stretch}
+.stage-frame{position:relative;min-height:560px;overflow:hidden;background:#fff;border:1px solid rgba(31,58,68,.08);border-left:none;border-radius:12px;box-shadow:var(--shadow-light)}
+.stage{position:relative;width:100%;min-height:560px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none}
+.stage:active{cursor:grabbing}.view{width:100%;height:560px;display:block}
+.control-panel{display:flex;flex-direction:column;gap:10px}.control-card{background:#fff;border:1px solid rgba(31,58,68,.08);border-left:none;border-radius:12px;padding:.75em .9em;box-shadow:var(--shadow-light)}
+.control-card h2{margin:0 0 .75em;font-size:.62rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(60,60,60,.62);line-height:1}
+.control-row{display:grid;grid-template-columns:82px 1fr 48px;gap:8px;align-items:center;margin:8px 0}.control-row span:first-child{font-size:.86rem;font-weight:700;color:var(--gris-encrage)}
+.value{text-align:right;color:var(--text-muted);font-size:.82rem;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden}input[type="range"]{width:100%;accent-color:var(--bleu-atelier)}
+.checks{display:grid;gap:8px;margin-top:10px}.check{display:flex;align-items:center;gap:8px;font-size:.82rem;font-weight:700;color:var(--gris-encrage);cursor:pointer;user-select:none}.check input{accent-color:var(--rouge-atelier)}
+.action-card{display:grid;grid-template-columns:1fr 1fr;gap:8px}button{width:100%;padding:11px 14px;border:none;border-radius:12px;background:var(--bleu-atelier);color:var(--blanc-casse);font-size:.9rem;font-weight:800;cursor:pointer;box-shadow:var(--shadow-light);transition:filter .14s ease,transform .14s ease}button:hover{filter:brightness(1.08);transform:translateY(-1px)}button:active{transform:translateY(0)}button.secondary{background:#E8E0D2;color:var(--bleu-atelier)}
+.eigrutel-app-footer{width:100%;padding:24px 16px 4px;text-align:center}.eigrutel-app-footer a{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--bleu-atelier);text-decoration:none;opacity:.72}.eigrutel-app-footer a:hover{opacity:1}
+@media (max-width:880px){.box-layout{grid-template-columns:1fr}.stage-frame,.stage{min-height:460px}.view{height:460px}.object-picker{width:100%;margin-left:0}}
+@media (max-width:600px){.container{padding:.75rem .75rem 1.5rem}.box-generator{padding:12px}.stage-frame,.stage{min-height:420px}.view{height:420px}.control-card{padding:.68em .75em}.control-row{grid-template-columns:78px 1fr 46px;gap:7px}.control-row span:first-child{font-size:.82rem}.value,.check{font-size:.78rem}button{padding:10px 12px;font-size:.86rem}}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- Barre supérieure / Top bar -->
+  <div class="volumes-topbar">
+    <h1 class="volumes-title">Forms</h1>
+    <button class="lang-switch" id="langSwitch" type="button" aria-label="Changer de langue / Switch language">FR / EN</button>
+    <div class="object-picker">
+      <label id="objectLabel" for="volumeObjectSelect">Objet</label>
+      <select id="volumeObjectSelect">
+        <option value="box">Boîte</option>
+        <option value="cylinder">Cylindre</option>
+        <option value="sphere">Sphère</option>
+        <option value="cone">Cône</option>
+        <option value="pyramid">Pyramide</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Zone de dessin et réglages / Drawing area and controls -->
+  <section class="box-generator">
+    <div class="box-layout">
+      <section class="stage-frame"><div class="stage" id="volumeStage"><canvas class="view" id="volumeCanvas" width="800" height="560"></canvas></div></section>
+      <aside class="control-panel" id="volumeControls"></aside>
+    </div>
+  </section>
+  <!-- Pied de page / Footer -->
+  <footer class="eigrutel-app-footer"><a href="https://www.stripmee.com" target="_blank" rel="noopener noreferrer">Eigrutel BD Academy</a></footer>
+</div>
+<script>
+(function(){
+'use strict';
+
+/* --------------------------------------------------------------------------
+   Internationalisation légère / Lightweight internationalisation
+   Aucun fichier externe : l'application reste entièrement autonome.
+   No external file: the application remains fully self-contained.
+---------------------------------------------------------------------------- */
+const I18N={
+  fr:{
+    object:'Objet',
+    shapes:{box:'Boîte',cylinder:'Cylindre',sphere:'Sphère',cone:'Cône',pyramid:'Pyramide'},
+    random:'Pose aléatoire',
+    reset:'Réinitialiser',
+    viewAngle:'Angle de vue',
+    zoom:'Zoom',
+    faces:'Faces semi-transparentes',
+    rotation:'Rotation',
+    width:'Largeur',
+    height:'Hauteur',
+    depth:'Profondeur',
+    diameter:'Diamètre',
+    base:'Base'
+  },
+  en:{
+    object:'Object',
+    shapes:{box:'Box',cylinder:'Cylinder',sphere:'Sphere',cone:'Cone',pyramid:'Pyramid'},
+    random:'Random pose',
+    reset:'Reset',
+    viewAngle:'View angle',
+    zoom:'Zoom',
+    faces:'Semi-transparent faces',
+    rotation:'Rotation',
+    width:'Width',
+    height:'Height',
+    depth:'Depth',
+    diameter:'Diameter',
+    base:'Base'
+  }
+};
+
+const App={};
+App.canvas=document.getElementById('volumeCanvas');
+App.ctx=App.canvas.getContext('2d');
+App.stage=document.getElementById('volumeStage');
+App.panel=document.getElementById('volumeControls');
+App.select=document.getElementById('volumeObjectSelect');
+App.langButton=document.getElementById('langSwitch');
+App.objectLabel=document.getElementById('objectLabel');
+App.lang='fr';
+App.shape='box';
+App.dragging=false;App.lastX=0;App.lastY=0;
+App.defaults={
+  box:{rotX:-18,rotY:28,rotZ:0,perspective:800,zoom:80,width:220,height:160,depth:160,showFaces:true},
+  cylinder:{rotX:-44,rotY:35,rotZ:19,perspective:800,zoom:102,diameter:91,height:194,showFaces:false},
+  sphere:{rotX:-18,rotY:28,rotZ:0,perspective:800,zoom:102,diameter:180},
+  cone:{rotX:47,rotY:148,rotZ:30,perspective:800,zoom:102,diameter:91,height:194},
+  pyramid:{rotX:-18,rotY:28,rotZ:0,perspective:800,zoom:102,baseSize:120,height:194}
+};
+App.state=JSON.parse(JSON.stringify(App.defaults));
+function t(key){return I18N[App.lang][key]}
+function shapeLabel(key){return I18N[App.lang].shapes[key]}
+function updateStaticLanguage(){
+  document.documentElement.lang=App.lang;
+  App.objectLabel.textContent=t('object');
+  Array.from(App.select.options).forEach(option=>{option.textContent=shapeLabel(option.value)});
+  App.langButton.setAttribute('aria-label',App.lang==='fr'?'Passer en anglais':'Switch to French');
+}
+
+App.controls={};App.valueEls={};
+
+/* Outils mathématiques et projection 3D / Math helpers and 3D projection */
+function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function rad(v){return v*Math.PI/180}
+function rotate(p,rx,ry,rz){let x=p.x,y=p.y,z=p.z;let cy=Math.cos(rx),sy=Math.sin(rx);let y1=y*cy-z*sy,z1=y*sy+z*cy;y=y1;z=z1;let cx=Math.cos(ry),sx=Math.sin(ry);let x2=x*cx+z*sx,z2=-x*sx+z*cx;x=x2;z=z2;let cz=Math.cos(rz),sz=Math.sin(rz);return{x:x*cz-y*sz,y:x*sz+y*cz,z:z};}
+function project(p,persp,zoom,cx,cy){const sc=(persp/(persp-p.z))*zoom;return{x:cx+p.x*sc,y:cy+p.y*sc,z:p.z,scale:sc}}
+function canvasSize(){const dpr=window.devicePixelRatio||1;const r=App.canvas.getBoundingClientRect();const w=Math.max(320,Math.round(r.width)),h=Math.max(320,Math.round(r.height));App.canvas.width=Math.round(w*dpr);App.canvas.height=Math.round(h*dpr);App.ctx.setTransform(dpr,0,0,dpr,0,0);return{w,h,cx:w/2,cy:h/2}}
+function poly(points,fill,stroke,width=1.2,close=true){const c=App.ctx;if(points.length<2)return;c.beginPath();c.moveTo(points[0].x,points[0].y);for(let i=1;i<points.length;i++)c.lineTo(points[i].x,points[i].y);if(close)c.closePath();if(fill){c.fillStyle=fill;c.fill()}if(stroke){c.strokeStyle=stroke;c.lineWidth=width;c.stroke()}}
+function line(points,stroke,width=1.4){poly(points,null,stroke,width,false)}
+function facing(points){let sum=0;for(let i=0;i<points.length;i++){const a=points[i],b=points[(i+1)%points.length];sum+=(b.x-a.x)*(b.y+a.y)}return sum>0}
+function getCSS(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()}
+function stageState(){const s=App.state[App.shape];return{rx:rad(s.rotX),ry:rad(s.rotY),rz:rad(s.rotZ),perspective:s.perspective||800,zoom:(s.zoom||100)/100}}
+function rp(p,st,geo){return project(rotate(p,st.rx,st.ry,st.rz),st.perspective,st.zoom,geo.cx,geo.cy)}
+/* Construction dynamique du panneau / Dynamic control-panel builder */
+function buildUI(){
+  App.panel.innerHTML='';
+  App.controls={};
+  App.valueEls={};
+  const sh=App.shape,s=App.state[sh];
+
+  const action=card('action-card');
+  action.innerHTML='<button id="volumeRandom" type="button">'+t('random')+'</button><button id="volumeReset" class="secondary" type="button">'+t('reset')+'</button>';
+  App.panel.appendChild(action);
+  document.getElementById('volumeRandom').onclick=randomPose;
+  document.getElementById('volumeReset').onclick=resetShape;
+
+  const view=card('');
+  if(sh!=='sphere') addRange(view,'perspective',t('viewAngle'),250,1600,s.perspective,'');
+  addRange(view,'zoom',t('zoom'),50,180,s.zoom,'%');
+  if(sh==='box'||sh==='cylinder') addCheck(view,'showFaces',t('faces'),s.showFaces);
+  App.panel.appendChild(view);
+
+  const rot=card('');
+  rot.innerHTML='<h2>'+t('rotation')+'</h2>';
+  addRange(rot,'rotX','X',-180,180,s.rotX,'°');
+  addRange(rot,'rotY','Y',-180,180,s.rotY,'°');
+  addRange(rot,'rotZ','Z',-180,180,s.rotZ,'°');
+  App.panel.appendChild(rot);
+
+  const dims=card('');
+  dims.innerHTML='<h2>'+shapeLabel(sh)+'</h2>';
+  if(sh==='box'){
+    addRange(dims,'width',t('width'),80,360,s.width,'');
+    addRange(dims,'height',t('height'),60,280,s.height,'');
+    addRange(dims,'depth',t('depth'),50,260,s.depth,'');
+  }
+  if(sh==='cylinder'||sh==='cone'){
+    addRange(dims,'diameter',t('diameter'),80,360,s.diameter,'');
+    addRange(dims,'height',t('height'),60,280,s.height,'');
+  }
+  if(sh==='sphere') addRange(dims,'diameter',t('diameter'),70,320,s.diameter,'');
+  if(sh==='pyramid'){
+    addRange(dims,'baseSize',t('base'),70,320,s.baseSize,'');
+    addRange(dims,'height',t('height'),60,280,s.height,'');
+  }
+  App.panel.appendChild(dims);
+  updateLabels();
+  render();
+}
+function card(extra){const d=document.createElement('div');d.className='control-card '+extra;return d}
+function addRange(parent,key,label,min,max,val,suffix){const row=document.createElement('div');row.className='control-row';row.innerHTML='<span>'+label+'</span><input type="range" min="'+min+'" max="'+max+'" value="'+val+'"><span class="value"></span>';const inp=row.querySelector('input'),v=row.querySelector('.value');inp.oninput=()=>{App.state[App.shape][key]=Number(inp.value);updateLabels();render()};parent.appendChild(row);App.controls[key]=inp;App.valueEls[key]={el:v,suffix:suffix};}
+function addCheck(parent,key,label,val){const wrap=document.createElement('div');wrap.className='checks';wrap.innerHTML='<label class="check"><input type="checkbox"> '+label+'</label>';const inp=wrap.querySelector('input');inp.checked=!!val;inp.onchange=()=>{App.state[App.shape][key]=inp.checked;render()};parent.appendChild(wrap);App.controls[key]=inp;}
+function updateLabels(){const s=App.state[App.shape];Object.keys(App.valueEls).forEach(k=>{const info=App.valueEls[k];if(k==='perspective'){info.el.textContent='';return;}let val=s[k];if(k==='rotX'||k==='rotY'||k==='rotZ'||k==='zoom')val=Math.round(val);info.el.textContent=val+info.suffix;});}
+function syncInputs(){const s=App.state[App.shape];Object.keys(App.controls).forEach(k=>{if(App.controls[k].type==='checkbox')App.controls[k].checked=!!s[k];else App.controls[k].value=s[k]});updateLabels()}
+function resetShape(){App.state[App.shape]=JSON.parse(JSON.stringify(App.defaults[App.shape]));syncInputs();render()}
+function randomPose(){const s=App.state[App.shape];s.rotX=rand(-75,75);s.rotY=rand(-170,170);s.rotZ=App.shape==='sphere'?rand(-180,180):rand(-35,35);syncInputs();render()}
+/* Rendu de la forme active / Active shape rendering */
+function render(){const geo=canvasSize();const c=App.ctx;c.clearRect(0,0,geo.w,geo.h);if(App.shape==='box')drawBox(geo);if(App.shape==='cylinder')drawCylinder(geo);if(App.shape==='sphere')drawSphere(geo);if(App.shape==='cone')drawCone(geo);if(App.shape==='pyramid')drawPyramid(geo)}
+/* Boîte / Box */
+function drawBox(geo){const s=App.state.box,st=stageState(),w=s.width/2,h=s.height/2,d=s.depth/2;const pts=[[-w,-h,-d],[w,-h,-d],[w,h,-d],[-w,h,-d],[-w,-h,d],[w,-h,d],[w,h,d],[-w,h,d]].map(a=>({x:a[0],y:a[1],z:a[2]}));const r=pts.map(p=>rotate(p,st.rx,st.ry,st.rz));const p2=r.map(p=>project(p,st.perspective,st.zoom,geo.cx,geo.cy));const faces=[{i:[4,5,6,7],f:'rgba(245,228,176,.72)'},{i:[1,5,6,2],f:'rgba(202,221,232,.62)'},{i:[0,1,5,4],f:'rgba(224,204,232,.62)'},{i:[0,3,2,1],f:'rgba(220,220,220,.16)'},{i:[0,4,7,3],f:'rgba(220,220,220,.20)'},{i:[3,7,6,2],f:'rgba(220,220,220,.16)'}];faces.forEach(f=>f.z=f.i.reduce((a,i)=>a+r[i].z,0)/4);faces.sort((a,b)=>a.z-b.z);faces.forEach(f=>poly(f.i.map(i=>p2[i]),s.showFaces?f.f:'transparent','#111',2));}
+function circlePts(radius,y,count=96){const a=[];for(let i=0;i<count;i++){const t=i/count*Math.PI*2;a.push({x:Math.cos(t)*radius,y:y,z:Math.sin(t)*radius})}return a}
+/* Cylindre / Cylinder */
+function drawCylinder(geo){const s=App.state.cylinder,st=stageState(),r=s.diameter/2,h=s.height/2,n=96;const top=circlePts(r,-h,n),bot=circlePts(r,h,n);const rt=top.map(p=>rotate(p,st.rx,st.ry,st.rz)),rb=bot.map(p=>rotate(p,st.rx,st.ry,st.rz));const pt=rt.map(p=>project(p,st.perspective,st.zoom,geo.cx,geo.cy)),pb=rb.map(p=>project(p,st.perspective,st.zoom,geo.cx,geo.cy));for(let i=0;i<n;i++){const j=(i+1)%n;const avg=(rt[i].z+rt[j].z+rb[i].z+rb[j].z)/4;const shade=190+Math.round(28*((Math.sin(i/n*Math.PI*2)+1)/2));const fill=s.showFaces?'rgba(202,221,232,.30)':'rgb('+shade+','+(shade+12)+','+(shade+14)+')';const stroke=s.showFaces?'rgba(17,17,17,.16)':null;poly([pt[i],pt[j],pb[j],pb[i]],fill,stroke,1)}
+  const normalTop=rotate({x:0,y:-1,z:0},st.rx,st.ry,st.rz);const normalBot=rotate({x:0,y:1,z:0},st.rx,st.ry,st.rz);
+  if(normalTop.z>=normalBot.z){drawCap(pb,normalBot.z>0,s.showFaces);drawCap(pt,normalTop.z>0,s.showFaces)}else{drawCap(pt,normalTop.z>0,s.showFaces);drawCap(pb,normalBot.z>0,s.showFaces)}
+  line(pt,'#9d7451',1.6);line(pb,'#9d7451',1.6);
+}
+function drawCap(points,front,semi){poly(points,front?(semi?'rgba(224,204,232,.50)':'rgba(229,205,179,.85)'):'rgba(229,205,179,.16)',front?'#9d7451':'rgba(157,116,81,.35)',1.4)}
+/* Cône / Cone */
+function drawCone(geo){const s=App.state.cone,st=stageState(),r=s.diameter/2,h=s.height/2,n=96;const apex=rotate({x:0,y:-h,z:0},st.rx,st.ry,st.rz);const base=circlePts(r,h,n).map(p=>rotate(p,st.rx,st.ry,st.rz));const ap=project(apex,st.perspective,st.zoom,geo.cx,geo.cy),bp=base.map(p=>project(p,st.perspective,st.zoom,geo.cx,geo.cy));const tris=[];for(let i=0;i<n;i++){const j=(i+1)%n;tris.push({z:(apex.z+base[i].z+base[j].z)/3,pts:[ap,bp[i],bp[j]]})}tris.sort((a,b)=>a.z-b.z);tris.forEach(t=>poly(t.pts,'#d3dde0',null,1));const baseNormal=rotate({x:0,y:1,z:0},st.rx,st.ry,st.rz);poly(bp,baseNormal.z<0?'#d9c2a2':'rgba(217,194,162,.18)',baseNormal.z<0?'#8c6741':'rgba(140,103,65,.35)',1.6);}
+function greatCircle(radius,mode,count=160){const a=[];for(let i=0;i<=count;i++){const t=i/count*Math.PI*2;a.push(mode==='equator'?{x:radius*Math.cos(t),y:0,z:radius*Math.sin(t)}:{x:0,y:radius*Math.cos(t),z:radius*Math.sin(t)})}return a}
+function drawGreat(points3,st,geo){let front=[],back=[],curF=[],curB=[];points3.forEach(p=>{const pp=project(p,st.perspective,st.zoom,geo.cx,geo.cy);if(p.z>=0){curF.push(pp);if(curB.length>1)back.push(curB);curB=[]}else{curB.push(pp);if(curF.length>1)front.push(curF);curF=[]}});if(curF.length>1)front.push(curF);if(curB.length>1)back.push(curB);back.forEach(seg=>line(seg,'rgba(81,106,114,.24)',1.3));front.forEach(seg=>line(seg,'#516A72',1.55));}
+/* Sphère / Sphere */
+function drawSphere(geo){const s=App.state.sphere,st=stageState(),r=s.diameter/2;const center=project({x:0,y:0,z:0},st.perspective,st.zoom,geo.cx,geo.cy);const pr=r*st.zoom;const c=App.ctx;c.beginPath();c.arc(center.x,center.y,pr,0,Math.PI*2);c.fillStyle='#EEF2F3';c.fill();c.strokeStyle='#7A9197';c.lineWidth=1.5;c.stroke();
+  /* Les grands cercles sont projetés en perspective. À fort zoom/diamètre,
+     leur projection peut dépasser le contour théorique de la sphère.
+     Un masque circulaire strict les maintient donc à l'intérieur.
+     Great circles are projected in perspective. At high zoom/diameter their
+     projection may exceed the theoretical outline, so a circular clip is used. */
+  c.save();
+  c.beginPath();
+  c.arc(center.x,center.y,pr,0,Math.PI*2);
+  c.clip();
+  drawGreat(greatCircle(r,'equator').map(p=>rotate(p,st.rx,st.ry,st.rz)),st,geo);
+  drawGreat(greatCircle(r,'meridian').map(p=>rotate(p,st.rx,st.ry,st.rz)),st,geo);
+  c.restore();
+  c.beginPath();c.arc(center.x,center.y,pr,0,Math.PI*2);c.strokeStyle='#7A9197';c.lineWidth=1.5;c.stroke();}
+/* Pyramide / Pyramid */
+function drawPyramid(geo){const s=App.state.pyramid,st=stageState(),b=s.baseSize/2,h=s.height/2;const pts=[{x:0,y:-h,z:0},{x:-b,y:h,z:-b},{x:b,y:h,z:-b},{x:b,y:h,z:b},{x:-b,y:h,z:b}];const r=pts.map(p=>rotate(p,st.rx,st.ry,st.rz));const p2=r.map(p=>project(p,st.perspective,st.zoom,geo.cx,geo.cy));const faces=[{i:[0,1,2],f:'rgba(213,223,226,.55)',e:'rgba(122,145,151,.95)'},{i:[0,2,3],f:'rgba(199,211,215,.55)',e:'rgba(122,145,151,.95)'},{i:[0,3,4],f:'rgba(217,226,229,.55)',e:'rgba(122,145,151,.95)'},{i:[0,4,1],f:'rgba(204,215,219,.55)',e:'rgba(122,145,151,.95)'},{i:[1,2,3,4],f:'rgba(217,194,162,.52)',e:'rgba(140,103,65,.9)'}];faces.forEach(f=>f.z=f.i.reduce((a,i)=>a+r[i].z,0)/f.i.length);faces.sort((a,b)=>a.z-b.z);faces.forEach(f=>poly(f.i.map(i=>p2[i]),f.f,f.e,1.35));}
+/* Interactions : langue, sélection, souris, tactile et clavier /
+   Interactions: language, selection, mouse, touch and keyboard */
+App.langButton.addEventListener('click',()=>{
+  App.lang=App.lang==='fr'?'en':'fr';
+  updateStaticLanguage();
+  buildUI();
+});
+App.select.addEventListener('change',()=>{App.shape=App.select.value;buildUI()});
+App.stage.addEventListener('pointerdown',e=>{App.dragging=true;App.lastX=e.clientX;App.lastY=e.clientY;App.stage.setPointerCapture(e.pointerId)});
+App.stage.addEventListener('pointermove',e=>{if(!App.dragging)return;const dx=e.clientX-App.lastX,dy=e.clientY-App.lastY;App.lastX=e.clientX;App.lastY=e.clientY;const s=App.state[App.shape];s.rotY=Math.round(clamp(Number(s.rotY)+dx*.6,-180,180));s.rotX=Math.round(clamp(Number(s.rotX)-dy*.6,-180,180));syncInputs();render()});
+App.stage.addEventListener('pointerup',()=>App.dragging=false);App.stage.addEventListener('pointercancel',()=>App.dragging=false);
+App.stage.addEventListener('wheel',e=>{e.preventDefault();const s=App.state[App.shape];s.zoom=clamp(Number(s.zoom)-Math.sign(e.deltaY)*6,50,180);syncInputs();render()},{passive:false});
+App.stage.addEventListener('dblclick',resetShape);
+window.addEventListener('keydown',e=>{const s=App.state[App.shape],step=e.shiftKey?10:3;if(e.target&&['INPUT','SELECT','TEXTAREA'].includes(e.target.tagName))return;if(e.key==='ArrowLeft')s.rotY=clamp(s.rotY-step,-180,180);else if(e.key==='ArrowRight')s.rotY=clamp(s.rotY+step,-180,180);else if(e.key==='ArrowUp')s.rotX=clamp(s.rotX+step,-180,180);else if(e.key==='ArrowDown')s.rotX=clamp(s.rotX-step,-180,180);else if(e.key.toLowerCase()==='r')resetShape();else if(e.key===' '){e.preventDefault();randomPose()}else return;syncInputs();render()});
+window.addEventListener('resize',render);
+updateStaticLanguage();
+buildUI();
+})();
+</script>
+</body>
+</html>
